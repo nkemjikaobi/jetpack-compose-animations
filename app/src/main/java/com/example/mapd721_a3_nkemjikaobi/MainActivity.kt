@@ -207,9 +207,9 @@ fun ScaleAnimationScreen(navController: NavController) {
 
         LaunchedEffect(isScaled) {
             if (isScaled) {
-                scale.animateTo(3f)
+                scale.animateTo(3f, animationSpec = tween(durationMillis = 1000))
             } else {
-                scale.animateTo(1f)
+                scale.animateTo(1f, animationSpec = tween(durationMillis = 1000))
             }
         }
 
