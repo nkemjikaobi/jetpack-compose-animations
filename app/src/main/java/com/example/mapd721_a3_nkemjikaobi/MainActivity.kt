@@ -163,32 +163,37 @@ fun TransitionAnimationScreen(navController: NavController) {
 
 @Composable
 fun ScaleAnimationScreen(navController: NavController) {
-//    var scale by remember { mutableStateOf(1f) }
-//
-//    LaunchedEffect(Unit) {
-//        val infiniteAnim = infiniteRepeatable(
-//            animation = tween(durationMillis = 1000, easing = FastOutSlowInEasing),
-//            repeatMode = RepeatMode.Reverse
-//        )
-//        while (true) {
-//            scale = animateFloatAsState(
-//                targetValue = if (scale == 1f) 1.5f else 1f,
-//                animationSpec = infiniteAnim
-//            ).value
-//        }
-//    }
-//
-//    Button(
-//        onClick = { /*TODO*/ },
-//        modifier = Modifier
-//            .size(100.dp)
-//            .scale(scale),
-////        colors = ButtonDefaults.buttonColors(backgroundColor = Color.Magenta),
-//        shape = CircleShape
-//    ) {
-//        Text(text = "Scale Me", color = Color.White)
-//    }
+    var isScaled by remember { mutableStateOf(false) }
+    val scale = remember { Animatable(1f) }
+
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+
+        LaunchedEffect(isScaled) {
+            if (isScaled) {
+                scale.animateTo(3f)
+            } else {
+                scale.animateTo(1f)
+            }
+        }
+
+        val scaledModifier = Modifier.scale(scale.value)
+        Button(
+            onClick = {
+                isScaled = !isScaled
+            },
+            modifier = Modifier
+                .padding(16.dp)
+                .then(scaledModifier)
+        ) {
+            Text(if (isScaled) "Click me to reset" else "Click me to animate")
+        }
+    }
 }
+
 
 @Composable
 fun InfiniteAnimationScreen(navController: NavController) {
