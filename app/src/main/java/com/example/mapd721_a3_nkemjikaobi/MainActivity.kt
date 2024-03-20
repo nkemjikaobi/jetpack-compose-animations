@@ -10,12 +10,15 @@ import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.keyframes
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -199,8 +202,41 @@ fun ScaleAnimationScreen(navController: NavController) {
 
 @Composable
 fun InfiniteAnimationScreen(navController: NavController) {
-    // Implement infinite animation screen UI here
+    val scale = remember { Animatable(1f) }
+
+    LaunchedEffect(Unit) {
+        val pulseAnimation = infiniteRepeatable(
+            animation = keyframes {
+                durationMillis = 1000
+                1.2f at 500
+                1f at 1000
+            },
+            repeatMode = RepeatMode.Reverse
+        )
+
+        while (true) {
+            scale.animateTo(1.2f, pulseAnimation)
+            scale.animateTo(1f, pulseAnimation)
+        }
+    }
+
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.White),
+        contentAlignment = Alignment.Center
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.butterfly),
+            contentDescription = null,
+            modifier = Modifier
+                .scale(scale.value)
+                .size(200.dp)
+        )
+    }
 }
+
+
 
 @Composable
 fun ExitAnimationScreen(navController: NavController) {
@@ -209,7 +245,7 @@ fun ExitAnimationScreen(navController: NavController) {
 
     Column(
         modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Bottom, // Align items to the bottom
+        verticalArrangement = Arrangement.Bottom,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Button(
@@ -234,7 +270,7 @@ fun ExitAnimationScreen(navController: NavController) {
         ) {
             Column(
                 modifier = Modifier.fillMaxWidth(),
-                verticalArrangement = Arrangement.Bottom, // Align items to the bottom
+                verticalArrangement = Arrangement.Bottom,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Image(
@@ -251,7 +287,7 @@ fun ExitAnimationScreen(navController: NavController) {
 
 @Preview(showBackground = true)
 @Composable
-fun GreetingPreview() {
+fun HomeScreenPreview() {
     MAPD721A3NkemjikaObiTheme {
         val navController = rememberNavController()
         NavHost(navController = navController, startDestination = "home") {
