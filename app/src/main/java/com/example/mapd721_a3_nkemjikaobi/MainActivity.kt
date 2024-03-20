@@ -12,6 +12,8 @@ import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -202,22 +204,50 @@ fun InfiniteAnimationScreen(navController: NavController) {
 
 @Composable
 fun ExitAnimationScreen(navController: NavController) {
-    var visible by remember { mutableStateOf(true) }
-    LaunchedEffect(visible) {
-        delay(2000)
-        visible = false
-        delay(2000)
-        navController.popBackStack()
-    }
+    var visible by remember { mutableStateOf(false) }
+    var buttonText by remember { mutableStateOf("Press for enter animation") }
 
-    AnimatedVisibility(visible = visible) {
-        Image(
-            painter = painterResource(id = R.drawable.robot),
-            contentDescription = null,
-            modifier = Modifier.fillMaxSize()
-        )
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Bottom, // Align items to the bottom
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Button(
+            onClick = {
+                if (!visible) {
+                    visible = true
+                    buttonText = "Press for exit animation"
+                } else {
+                    visible = false
+                    buttonText = "Press for enter animation"
+                }
+            },
+            modifier = Modifier.padding(16.dp)
+        ) {
+            Text(buttonText)
+        }
+
+        AnimatedVisibility(
+            visible = visible,
+            enter = fadeIn(animationSpec = tween(durationMillis = 1000, easing = FastOutSlowInEasing)),
+            exit = fadeOut(animationSpec = tween(durationMillis = 1000, easing = FastOutSlowInEasing))
+        ) {
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                verticalArrangement = Arrangement.Bottom, // Align items to the bottom
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Image(
+                    painter = painterResource(id = R.drawable.robot),
+                    contentDescription = null,
+                    modifier = Modifier.fillMaxSize()
+                )
+            }
+        }
     }
 }
+
+
 
 @Preview(showBackground = true)
 @Composable
