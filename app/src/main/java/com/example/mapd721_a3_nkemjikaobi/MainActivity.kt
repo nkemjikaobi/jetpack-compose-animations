@@ -61,7 +61,6 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             MAPD721A3NkemjikaObiTheme {
-                // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
@@ -261,7 +260,7 @@ fun InfiniteAnimationScreen(navController: NavController) {
             onClick = { navController.popBackStack() },
             modifier = Modifier
                 .padding(16.dp)
-                .align(Alignment.TopStart) // Align to top start
+                .align(Alignment.TopStart)
         ) {
             Icon(
                 painter = painterResource(id = R.drawable.back_arrow),
