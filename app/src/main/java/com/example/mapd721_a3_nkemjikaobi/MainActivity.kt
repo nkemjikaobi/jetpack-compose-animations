@@ -28,6 +28,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -162,8 +164,22 @@ fun TransitionAnimationScreen(navController: NavController) {
         ) {
             Text(if (visible) "Launch Rocket" else "Land Rocket", color = Color.White)
         }
+
+        // Back button to navigate to the home screen
+        IconButton(
+            onClick = { navController.popBackStack() },
+            modifier = Modifier
+                .align(Alignment.Start)
+                .padding(16.dp)
+        ) {
+            Icon(
+                painter = painterResource(id = R.drawable.back_arrow),
+                contentDescription = "Back"
+            )
+        }
     }
 }
+
 
 
 @Composable
@@ -176,6 +192,19 @@ fun ScaleAnimationScreen(navController: NavController) {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+
+        // Back button to navigate to the home screen
+        IconButton(
+            onClick = { navController.popBackStack() },
+            modifier = Modifier
+                .align(Alignment.Start)
+                .padding(16.dp)
+        ) {
+            Icon(
+                painter = painterResource(id = R.drawable.back_arrow),
+                contentDescription = "Back"
+            )
+        }
 
         LaunchedEffect(isScaled) {
             if (isScaled) {
@@ -226,6 +255,20 @@ fun InfiniteAnimationScreen(navController: NavController) {
             .background(Color.White),
         contentAlignment = Alignment.Center
     ) {
+
+        // Back button to navigate to the home screen
+        IconButton(
+            onClick = { navController.popBackStack() },
+            modifier = Modifier
+                .padding(16.dp)
+                .align(Alignment.TopStart) // Align to top start
+        ) {
+            Icon(
+                painter = painterResource(id = R.drawable.back_arrow),
+                contentDescription = "Back"
+            )
+        }
+
         Image(
             painter = painterResource(id = R.drawable.butterfly),
             contentDescription = null,
@@ -233,8 +276,10 @@ fun InfiniteAnimationScreen(navController: NavController) {
                 .scale(scale.value)
                 .size(200.dp)
         )
+
     }
 }
+
 
 
 
@@ -248,6 +293,20 @@ fun ExitAnimationScreen(navController: NavController) {
         verticalArrangement = Arrangement.Bottom,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+
+        // Back button to navigate to the home screen
+        IconButton(
+            onClick = { navController.popBackStack() },
+            modifier = Modifier
+                .align(Alignment.Start)
+                .padding(16.dp)
+        ) {
+            Icon(
+                painter = painterResource(id = R.drawable.back_arrow),
+                contentDescription = "Back"
+            )
+        }
+
         Button(
             onClick = {
                 if (!visible) {
